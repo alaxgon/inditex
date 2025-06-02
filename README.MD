@@ -31,12 +31,11 @@ The service starts on **http://localhost:8080**.
 | **2** | `feat: add Price entity with auto‑DDL and seed data` | `Price` JPA entity, Hibernate auto‑DDL, `data.sql` seeds (4 rows) |
 | **3** | `feat: add PriceRepository with priority-based query and tests` | Native query returning a single price for a date/product/brand, repository integration tests |
 | **4** | `feat: add PriceService with DTO mapping and unit tests` → `fix: correct parameter order for findApplicablePrice` | Domain service, `PriceDto`, happy path & error tests, parameter‑order fix |
-
+| **5** | REST controller `/prices` ↔︎ maps request params to `PriceService` |
 ---
 ## 3  Pending work
 | Upcoming | Description |
 |----------|-------------|
-| **5** | REST controller `/prices` ↔︎ maps request params to `PriceService` |
 | **6** | Global exception handling via `@ControllerAdvice` |
 | **7** | Extra edge‑case, integration & WebMvc tests; enforce Jacoco ≥ 90 % |
 | **8** | Final README polish, badges and Dockerfile (optional) |
