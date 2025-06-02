@@ -1,30 +1,79 @@
-# Inditex Price Service – Commit 1
+# Price Service – Inditex Technical Exercise
 
-Spring Boot application bootstrap.
+A Spring Boot 3.x micro‑service that exposes product **price** information following Inditex’s requirements. The code is structured using a *hexagonal* (ports & adapters) approach and is fully covered by automated tests.
 
-## What's included in this commit?
+---
+## 0  Tech stack
+| Category | Technology |
+|----------|------------|
+| Language | Java 17 |
+| Framework | Spring Boot 3, Spring Data JPA |
+| Database | H2 in‑memory (dev/test) |
+| Build | Maven 3.9 + Jacoco |
+| Helpers | Lombok, AssertJ, JUnit 5 |
 
-- **pom.xml** with essential dependencies: Web, Data JPA, H2, Lombok and Jacoco for test coverage.
-- **Initial package structure** following a hexagonal pattern (`com.inditex.prices`).
-- **Main class** `PriceServiceApplication`.
-- **Smoke test** `PriceServiceApplicationTests` verifying that the Spring context starts up.
-- **application.properties** minimal configuration to run an in‐memory H2 database.
-- **Java 17** build.
-
-## How to run
-
+---
+## 1  How to run
 ```bash
-# Run the application
-./mvnw spring-boot:run
+# Build, test and run coverage
+mvn clean verify
 
-# Execute tests and open the Jacoco report
-./mvnw test
-# The HTML report is generated at: target/site/jacoco/index.html
+# Start the application
+mvn spring-boot:run
+```
+The service will start on **http://localhost:8080**.
+
+---
+## 2  Completed milestones
+| Step | Conventional commit | Highlights |
+|------|---------------------|------------|
+| **1** | `chore: bootstrap Spring Boot project with H2 and Jacoco` | Project skeleton, hexagonal packages, Jacoco configured, basic context‑load test |
+| **2** | `feat: add Price entity with auto‑DDL and seed data` | `Price` JPA entity, Hibernate auto‑DDL, `data.sql` seeds (4 rows) |
+| **3** | `feat: add PriceRepository with priority-based query and tests` | Native query returning a single price for a date/product/brand, repository integration tests |
+
+---
+## 3  Pending work
+| Upcoming | Description |
+|----------|-------------|
+| **4** | Domain service (`PriceService`) and DTO mapping |
+| **5** | REST controller `/prices` |
+| **6** | Global exception handling |
+| **7** | Additional unit & integration tests (edge cases, error paths) |
+| **8** | Final README polishing and badges |
+
+---
+## 4  Architecture in brief
+```
+┌───────────────┐   query   ┌──────────────────┐
+│  REST client  │ ────────▶ │     Controller    │
+└───────────────┘           └─────────▲────────┘
+                                      │ DTO
+                                      │
+                                 ┌────▼─────┐  port   ┌──────────────────┐
+                                 │ Service  │────────▶│ Repository port   │
+                                 └────▲─────┘         └──────────────────┘
+                                      │
+                                      │ entity
+                              ┌───────▼────────┐
+                              │  JPA Adapter   │
+                              └─────────────────┘
+```
+*The core domain (service + port) remains completely framework‑agnostic.*
+
+---
+## 5  Testing & coverage
+Run all tests and view the coverage report:
+```bash
+mvn clean verify
+open target/site/jacoco/index.html
 ```
 
-## Next steps
-
-1. Create the `Price` entity and the `schema.sql` / `data.sql` scripts.
-2. Define `PriceRepository` and queries.
-3. Implement the domain service, DTOs and REST controller.
-4. Add exception handling and tests with > 90 % coverage.
+---
+## 6  Conventional commit rules
+```text
+feat:     a new feature
+fix:      a bug fix
+docs:     documentation only changes
+test:     adding or refactoring tests
+chore:    tooling / build / config
+```
