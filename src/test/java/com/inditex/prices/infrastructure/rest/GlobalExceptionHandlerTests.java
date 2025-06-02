@@ -48,4 +48,19 @@ class GlobalExceptionHandlerTests {
                 .andExpect(jsonPath("$.status").value(400))
                 .andExpect(jsonPath("$.error").value("Bad Request"));
     }
+
+    @Test
+    void shouldReturn500WhenGenericError() throws Exception {
+        Mockito.when(priceService.getApplicablePrice(LocalDateTime.parse("2020-06-14T10:00:00"), 35455L, 1L))
+                .thenThrow(new RuntimeException("Unexpected boom"));
+
+        mockMvc.perform(get("/prices")
+                        .param("date", "2020-06-14T10:00:00")
+                        .param("productId", "35455")
+                        .param("brandId", "1"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.status").value(500))
+                .andExpect(jsonPath("$.error").value("Internal Server Error"));
+    }
+
 }
