@@ -32,13 +32,13 @@ The service starts on **http://localhost:8080**.
 | **3** | `feat: add PriceRepository with priority-based query and tests` | Native query returning a single price for a date/product/brand, repository integration tests |
 | **4** | `feat: add PriceService with DTO mapping and unit tests` → `fix: correct parameter order for findApplicablePrice` | Domain service, `PriceDto`, happy path & error tests, parameter‑order fix |
 | **5** | REST controller `/prices` ↔︎ maps request params to `PriceService` |
+| **6** | Global exception handling via `@ControllerAdvice` |
 ---
 ## 3  Pending work
 | Upcoming | Description |
 |----------|-------------|
-| **6** | Global exception handling via `@ControllerAdvice` |
 | **7** | Extra edge‑case, integration & WebMvc tests; enforce Jacoco ≥ 90 % |
-| **8** | Final README polish, badges and Dockerfile (optional) |
+| **8** | Final README polish, badges|
 
 ---
 ## 4  Architecture in brief
