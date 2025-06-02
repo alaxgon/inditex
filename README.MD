@@ -1,6 +1,10 @@
 # Price Service – Inditex Technical Exercise
 
-A Spring Boot 3.x micro‑service that exposes product **price** information following Inditex’s requirements. The code is structured using a *hexagonal* (ports & adapters) approach and is fully covered by automated tests.
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-green)
+![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen)
+
+A Spring Boot 3.x microservice that exposes product **price** information following Inditex’s requirements. The code follows a *hexagonal architecture* (ports & adapters) and is fully covered by automated tests.
 
 ---
 ## 0  Tech stack
@@ -34,12 +38,12 @@ Service runs at **http://localhost:8080**.
 | **5** | `feat: add PriceController REST endpoint and web tests` | `/prices` endpoint, MockMvc test |
 | **6** | `feat: add global exception handler and error tests` | `@ControllerAdvice` → 404 & 400 JSON |
 | **7** | `test: add edge‑case integration tests and enforce Jacoco ≥90%` | Five official scenarios, 404 product/brand, Jacoco **check** rule |
-
+| **8** | Final README polish, coverage badge, optional Dockerfile |
 ---
 ## 3  Pending work
 | Upcoming | Description |
 |----------|-------------|
-| **8** | Final README polish, coverage badge, optional Dockerfile |
+
 
 ---
 ## 4  Architecture (overview)
@@ -68,9 +72,30 @@ Service runs at **http://localhost:8080**.
   open target/site/jacoco/index.html
   ```
 * **Build fails if line coverage < 90 %** (`jacoco-maven-plugin` *check* rule).
+---
+
+## 6  Example request & response
+
+**Request**
+```
+GET /prices?date=2020-06-14T10:00:00&productId=35455&brandId=1
+```
+
+**Response**
+```json
+{
+  "productId": 35455,
+  "brandId": 1,
+  "priceList": 1,
+  "startDate": "2020-06-14T00:00:00",
+  "endDate": "2020-12-31T23:59:59",
+  "price": 35.5,
+  "currency": "EUR"
+}
+```
 
 ---
-## 6  Conventional commit rules
+## 7  Conventional commit rules
 ```text
 feat:     a new feature
 fix:      a bug fix
