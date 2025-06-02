@@ -18,7 +18,7 @@ public class Price {
     private Long id;
 
     @Column(name = "brand_id", nullable = false)
-    private Integer brandId;
+    private Long brandId;
 
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
