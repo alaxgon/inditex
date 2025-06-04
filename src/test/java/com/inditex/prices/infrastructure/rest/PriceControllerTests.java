@@ -29,7 +29,7 @@ class PriceControllerTests {
         PriceDto dto = PriceDto.builder()
                 .productId(35455L)
                 .brandId(1L)
-                .priceList(1)
+                .priceList(1L)
                 .startDate(LocalDateTime.parse("2020-06-14T00:00:00"))
                 .endDate(LocalDateTime.parse("2020-12-31T23:59:59"))
                 .price(new BigDecimal("35.50"))

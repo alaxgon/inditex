@@ -14,7 +14,7 @@ class PriceDtoTests {
         PriceDto dto = PriceDto.builder()
                 .productId(35455L)
                 .brandId(1L)
-                .priceList(1)
+                .priceList(1L)
                 .startDate(LocalDateTime.MIN)
                 .endDate(LocalDateTime.MAX)
                 .price(new BigDecimal("25.45"))
