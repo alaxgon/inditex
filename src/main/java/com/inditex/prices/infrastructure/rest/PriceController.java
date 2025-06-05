@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
+/**
+ * REST controller that handles price lookup requests.
+ */
 @RestController
 @RequestMapping("/prices")
 public class PriceController {
@@ -21,10 +24,20 @@ public class PriceController {
         this.useCase = useCase;
     }
 
+    /**
+     * Returns the applicable price for the given parameters.
+     *
+     * @param date      application date
+     * @param productId product identifier
+     * @param brandId   brand identifier
+     * @return the price response DTO
+     */
     @GetMapping
-    public PriceResponse findPrice(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
-                                   @RequestParam Long productId,
-                                   @RequestParam Long brandId) {
+    public PriceResponse findPrice(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
+            @RequestParam Long productId,
+            @RequestParam Long brandId
+    ) {
         Price price = useCase.execute(date, productId, brandId);
         return PriceResponse.builder()
                 .productId(price.productId())

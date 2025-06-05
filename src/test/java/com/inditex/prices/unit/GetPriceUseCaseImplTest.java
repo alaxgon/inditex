@@ -21,8 +21,14 @@ class GetPriceUseCaseImplTest {
     @Test
     void returnsHighestPriority() {
         LocalDateTime ts = LocalDateTime.parse("2020-06-14T10:00:00");
-        Price low  = new Price(1L, 1L, 1L, 35455L, ts.minusHours(1), ts.plusHours(1), 0, BigDecimal.ONE, "EUR");
-        Price high = new Price(2L, 1L, 1L, 35455L, ts.minusHours(1), ts.plusHours(1), 5, BigDecimal.TEN, "EUR");
+
+        Price low = new Price(
+                1L, 1L, 1L, 35455L, ts.minusHours(1), ts.plusHours(1), 0, BigDecimal.ONE, "EUR"
+        );
+
+        Price high = new Price(
+                2L, 1L, 1L, 35455L, ts.minusHours(1), ts.plusHours(1), 5, BigDecimal.TEN, "EUR"
+        );
 
         when(repo.findByCriteria(35455L, 1L, ts)).thenReturn(List.of(low, high));
 
@@ -33,9 +39,10 @@ class GetPriceUseCaseImplTest {
 
     @Test
     void throwsWhenEmpty() {
-        when(repo.findByCriteria(1L, 1L, LocalDateTime.now())).thenReturn(List.of());
+        LocalDateTime now = LocalDateTime.now();
 
-        assertThrows(PriceNotFoundException.class,
-                () -> useCase.execute(LocalDateTime.now(), 1L, 1L));
+        when(repo.findByCriteria(1L, 1L, now)).thenReturn(List.of());
+
+        assertThrows(PriceNotFoundException.class, () -> useCase.execute(now, 1L, 1L));
     }
 }

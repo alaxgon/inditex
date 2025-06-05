@@ -29,17 +29,27 @@ class PriceControllerTest {
     @Test
     void returnsPriceSuccessfully() throws Exception {
         LocalDateTime ts = LocalDateTime.of(2020, 6, 14, 10, 0);
-        Price mockPrice = new Price(1L, 1L, 1L, 35455L,
-                ts.minusDays(1), ts.plusDays(1),
-                1, BigDecimal.valueOf(35.5), "EUR");
+        Price mockPrice = new Price(
+                1L,
+                1L,
+                1L,
+                35455L,
+                ts.minusDays(1),
+                ts.plusDays(1),
+                1,
+                BigDecimal.valueOf(35.5),
+                "EUR"
+        );
 
         when(useCase.execute(ts, 35455L, 1L)).thenReturn(mockPrice);
 
-        mockMvc.perform(get("/prices")
-                        .param("date", ts.toString())
-                        .param("productId", "35455")
-                        .param("brandId", "1")
-                        .accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(
+                        get("/prices")
+                                .param("date", ts.toString())
+                                .param("productId", "35455")
+                                .param("brandId", "1")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.productId").value(35455))
                 .andExpect(jsonPath("$.brandId").value(1))
@@ -51,15 +61,21 @@ class PriceControllerTest {
     @Test
     void returns404WhenPriceNotFound() throws Exception {
         LocalDateTime ts = LocalDateTime.of(2020, 6, 14, 10, 0);
-        when(useCase.execute(ts, 35455L, 1L))
-                .thenThrow(new PriceNotFoundException(35455L, 1L, ts));
 
-        mockMvc.perform(get("/prices")
-                        .param("date", ts.toString())
-                        .param("productId", "35455")
-                        .param("brandId", "1"))
+        when(useCase.execute(ts, 35455L, 1L)).thenThrow(
+                new PriceNotFoundException(35455L, 1L, ts)
+        );
+
+        mockMvc.perform(
+                        get("/prices")
+                                .param("date", ts.toString())
+                                .param("productId", "35455")
+                                .param("brandId", "1")
+                )
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.status").value(404))
-                .andExpect(jsonPath("$.message").value("No price found for product 35455 and brand 1 on 2020-06-14T10:00"));
+                .andExpect(jsonPath("$.message").value(
+                        "No price found for product 35455 and brand 1 on 2020-06-14T10:00"
+                ));
     }
 }

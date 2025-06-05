@@ -5,6 +5,9 @@ import lombok.Builder;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * DTO representing the price response returned by the REST API.
+ */
 @Builder
 public record PriceResponse(
         Long productId,
@@ -14,6 +17,6 @@ public record PriceResponse(
         LocalDateTime startDate,
         LocalDateTime endDate,
         BigDecimal price,
-        String currency) {
+        String currency
+) {
 }
-

@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class PriceRepositoryAdapterTest {
 
@@ -21,21 +23,28 @@ class PriceRepositoryAdapterTest {
 
     @Test
     void shouldReturnMappedPricesFromJpaRepository() {
-
         Long productId = 1L;
         Long brandId = 1L;
         LocalDateTime date = LocalDateTime.now();
 
         PriceEntity entity = new PriceEntity();
-        Price expectedPrice = new Price(1L, brandId, 1L, productId, date.minusDays(1), date.plusDays(1), 0, BigDecimal.TEN, "EUR");
+        Price expectedPrice = new Price(
+                1L,
+                brandId,
+                1L,
+                productId,
+                date.minusDays(1),
+                date.plusDays(1),
+                0,
+                BigDecimal.TEN,
+                "EUR"
+        );
 
         when(jpaRepository.searchPrices(productId, brandId, date)).thenReturn(List.of(entity));
         when(mapper.toDomain(entity)).thenReturn(expectedPrice);
 
-        // When
         List<Price> result = adapter.findByCriteria(productId, brandId, date);
 
-        // Then
         assertThat(result).containsExactly(expectedPrice);
         verify(jpaRepository).searchPrices(productId, brandId, date);
         verify(mapper).toDomain(entity);

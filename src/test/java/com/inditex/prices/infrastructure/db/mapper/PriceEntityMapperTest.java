@@ -3,15 +3,19 @@ package com.inditex.prices.infrastructure.db.mapper;
 import com.inditex.prices.domain.model.Price;
 import com.inditex.prices.infrastructure.db.entity.PriceEntity;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest
 class PriceEntityMapperTest {
 
-    private final PriceEntityMapper mapper = PriceEntityMapper.INSTANCE;
+    @Autowired
+    private PriceEntityMapper mapper;
 
     @Test
     void mapsEntityToDomain() {
@@ -39,10 +43,15 @@ class PriceEntityMapperTest {
     @Test
     void mapsDomainToEntity() {
         Price domain = new Price(
-                1L, 1L, 2L, 35455L,
+                1L,
+                1L,
+                2L,
+                35455L,
                 LocalDateTime.now().minusDays(1),
                 LocalDateTime.now().plusDays(1),
-                1, BigDecimal.valueOf(35.50), "EUR"
+                1,
+                BigDecimal.valueOf(35.50),
+                "EUR"
         );
 
         PriceEntity entity = mapper.toEntity(domain);
