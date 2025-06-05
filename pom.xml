@@ -93,9 +93,6 @@
                         </goals>
                         <configuration>
                             <excludes>
-                                <exclude>**/domain/**</exclude>
-                                <exclude>**/dto/**</exclude>
-                                <exclude>**/infrastructure/rest/ErrorResponse*</exclude>
                                 <exclude>**/PriceServiceApplication*</exclude>
                             </excludes>
                         </configuration>
@@ -119,9 +116,6 @@
                                         </limit>
                                     </limits>
                                     <excludes>
-                                        <exclude>**/domain/**</exclude>
-                                        <exclude>**/dto/**</exclude>
-                                        <exclude>**/infrastructure/rest/ErrorResponse*</exclude>
                                         <exclude>**/PriceServiceApplication*</exclude>
                                     </excludes>
                                 </rule>

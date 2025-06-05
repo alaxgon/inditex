@@ -9,4 +9,3 @@ CREATE TABLE IF NOT EXISTS price (
     price      DECIMAL(10,2) NOT NULL,
     currency   VARCHAR(3) NOT NULL
 );
-TRUNCATE TABLE price;

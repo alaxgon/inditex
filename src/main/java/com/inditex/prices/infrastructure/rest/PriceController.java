@@ -1,10 +1,9 @@
 package com.inditex.prices.infrastructure.rest;
 
-import com.inditex.prices.application.PriceService;
-import com.inditex.prices.application.dto.PriceDto;
-import lombok.RequiredArgsConstructor;
+import com.inditex.prices.application.usecase.GetPriceUseCase;
+import com.inditex.prices.domain.model.Price;
+import com.inditex.prices.infrastructure.rest.dto.PriceResponse;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,18 +13,28 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/prices")
-@RequiredArgsConstructor
 public class PriceController {
 
-    private final PriceService priceService;
+    private final GetPriceUseCase useCase;
+
+    public PriceController(GetPriceUseCase useCase) {
+        this.useCase = useCase;
+    }
 
     @GetMapping
-    public ResponseEntity<PriceDto> getApplicablePrice(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
-            @RequestParam Long productId,
-            @RequestParam Long brandId) {
-
-        PriceDto dto = priceService.getApplicablePrice(date, productId, brandId);
-        return ResponseEntity.ok(dto);
+    public PriceResponse findPrice(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
+                                   @RequestParam Long productId,
+                                   @RequestParam Long brandId) {
+        Price price = useCase.execute(date, productId, brandId);
+        return PriceResponse.builder()
+                .productId(price.productId())
+                .brandId(price.brandId())
+                .priority(price.priority())
+                .priceList(price.priceList())
+                .startDate(price.startDate())
+                .endDate(price.endDate())
+                .price(price.price())
+                .currency(price.currency())
+                .build();
     }
 }

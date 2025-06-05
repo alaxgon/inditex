@@ -1,16 +1,19 @@
-package com.inditex.prices.domain;
+package com.inditex.prices.infrastructure.rest.dto;
+
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record Price(
-        Long id,
-        Long brandId,
-        Long priceList,
+@Builder
+public record PriceResponse(
         Long productId,
+        Long brandId,
+        Integer priority,
+        Long priceList,
         LocalDateTime startDate,
         LocalDateTime endDate,
-        Integer priority,
         BigDecimal price,
         String currency) {
 }
+
