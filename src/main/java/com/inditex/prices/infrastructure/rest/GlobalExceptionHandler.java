@@ -20,7 +20,8 @@ public class GlobalExceptionHandler {
                         "timestamp", LocalDateTime.now(),
                         "status", HttpStatus.NOT_FOUND.value(),
                         "error", "Not Found",
-                        "message", ex.getMessage())) ;
+                        "message", String.valueOf(ex.getMessage())
+                ));
     }
 
     @ExceptionHandler({
@@ -34,9 +35,7 @@ public class GlobalExceptionHandler {
                         "timestamp", LocalDateTime.now(),
                         "status", HttpStatus.BAD_REQUEST.value(),
                         "error", "Bad Request",
-                        "message", ex.getMessage()
+                        "message", String.valueOf(ex.getMessage())
                 ));
     }
-
-
 }
