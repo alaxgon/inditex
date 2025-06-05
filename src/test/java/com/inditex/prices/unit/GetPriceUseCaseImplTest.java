@@ -1,6 +1,6 @@
 package com.inditex.prices.unit;
 
-import com.inditex.prices.application.usecase.GetPriceUseCaseImpl;
+import com.inditex.prices.application.service.GetPriceUseCaseImpl;
 import com.inditex.prices.domain.exception.PriceNotFoundException;
 import com.inditex.prices.domain.model.Price;
 import com.inditex.prices.domain.port.out.PriceRepository;
